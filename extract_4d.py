@@ -12,7 +12,7 @@ with open(filePath,'r') as f:
     header = f.readline()
     for line in f:
         info = line.strip().split()
-        seqList.append(list(info[1]))
+        seqList.append(list(info[1].upper()))
         speList.append(info[0])
 
 seqArray = np.array(seqList)
