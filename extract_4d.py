@@ -2,17 +2,10 @@ import sys
 import numpy as np
 
 filePath = sys.argv[1]
-codonPath = 'codon_4d.txt'
-
 codonDict = {'CTT':'L','CTC':'L','CTA':'L','CTG':'L','GTT':'V','GTC':'V','GTG':'V','GTA':'V', \
              'TCT':'S','TCC':'S','TCA':'S','TCG':'S','CCT':'P','CCC':'P','CCG':'P','CCA':'P', \
              'ACT':'T','ACC':'T','ACA':'T','ACG':'T','GCT':'A','GCC':'A','GCG':'A','GCA':'A', \
              'CGT':'R','CGC':'R','CGA':'R','CGG':'R','GGT':'G','GGC':'G','GGG':'G','GGA':'G'}
-with open(codonPath,'r') as f:
-    for line in f:
-        info = line.strip().split()
-        codonDict[info[0]] = info[1]
-
 seqList = []
 speList = []
 with open(filePath,'r') as f:
