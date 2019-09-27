@@ -40,6 +40,7 @@ for i in range(codonSelect.shape[1]):
       temp.append(i)
 
 a = seqArray[:,preCodonPos[temp]+2]
+a[a == '0']='-'
 print('\t'+str(len(speList))+'\t'+str(len(temp)))
 for i in range(0,len(speList)):
     print(speList[i]+'\t'+''.join(list(a[i])))
