@@ -31,10 +31,13 @@ codonSelect = np.char.add(np.char.add(seqArray[:,preCodonPos],seqArray[:,preCodo
 temp = []
 for i in range(codonSelect.shape[1]):
     tmp = codonSelect[:,i]
+    flag = 1
     for j in tmp:
-        if j in codonDict:
-            temp.append(i)
+        if j not in codonDict and j != '000':
+            flag = 0
             break
+    if flag:
+      temp.append(i)
 
 a = seqArray[:,preCodonPos[temp]+2]
 print('\t'+str(len(speList))+'\t'+str(len(temp)))
