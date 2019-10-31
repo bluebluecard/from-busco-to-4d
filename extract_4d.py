@@ -22,15 +22,20 @@ if seqLength%3 != 0:
     print("The length of sequences is not a multiple of 3!")
     sys.exit()
 
-stackBool = np.stack((seqArray == 'A', seqArray == 'G', seqArray == 'C', seqArray == 'T', seqArray == '-'))   
+zeroBool = seqArray == '0'
+tmp = np.array([],dtype = np.int16)
+for i in ['A','G','C','T']:
 
-boolAGCT =  np.sum(np.any(stackBool, axis = 1), axis = 0)
+    tmp = np.append(tmp,np.where(np.all(np.logical_or(seqArray == i,zeroBool),axis = 0))[0])
 
-cleanPos = np.where(boolAGCT == 1)[0]
-
-BothTrueBase = np.stack((cleanPos[:-1] % 3 == 0,cleanPos[1:] %3 ==1))
-
-preCodonPos = cleanPos[np.where(np.all(BothTrueBase,axis = 0))[0]]
+cleanPos = np.sort(tmp)
+del tmp
+quot = np.floor_divide(cleanPos,3)
+remind = np.mod(cleanPos,3)
+top2Base = np.where(remind < 2)[0]
+a = np.equal(quot[top2Base][:-1],quot[top2Base][1:])
+Top2Pos = cleanPos[top2Base][:-1]
+preCodonPos = Top2Pos[a]
 
 codonSelect = seqArray[:,[preCodonPos,preCodonPos+1,preCodonPos+2]]
 
@@ -48,7 +53,7 @@ for i in range(codonSelect.shape[2]):
 
 a = seqArray[:,preCodonPos[temp]+2]
 a[a == '0']='-'
+
 print('\t'+str(len(speList))+'\t'+str(len(temp)))
 for i in range(0,len(speList)):
     print(speList[i]+'\t'+''.join(list(a[i])))
-
